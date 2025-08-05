@@ -1,0 +1,30 @@
+{% if error %}
+<div class="alert alert-danger">
+    <h4>Connection Error</h4>
+    <p>{{ error }}</p>
+    <small>Check your LDAP server settings</small>
+</div>
+{% elif warning %}
+<div class="alert alert-warning">
+    {{ warning }}
+</div>
+{% else %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Source Server</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in replication_data %}
+        <tr>
+            <td>{{ item.source }}</td>
+            <td class="{% if item.status == 'Active' %}text-success{% else %}text-danger{% endif %}">
+                {{ item.status }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
